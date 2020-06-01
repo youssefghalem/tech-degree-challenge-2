@@ -56,20 +56,46 @@ if __name__ == "__main__":
     num_exp = int(len([player for player in PLAYERS if player["experience"] == "YES"])/len(TEAMS))
     num_inexp = int(len([player for player in PLAYERS if player["experience"] == "NO"])/len(TEAMS))
 
-    first_choice_menu = 1
+    print(bal_teams)
+    first_choice_menu = 0
+
+    retry_menu_1 = True
+    retry_menu_2 = True
 
     print("BASKETBALL TEAMS STATS TOOL :\n")
     print("----------MENU--------------:\n")
     print("Here are your choices : \n1) Display Team Stats \n2) Quit \n")
-    first_choice_menu = int(input("Enter a choice >"))
+
+# Iterating on the choice of 1 or 2 until we get a valid input
+    while(retry_menu_1) :
+        try :
+            first_choice_menu = int(input("Enter a choice >"))
+            if first_choice_menu > 2 :
+                raise ValueError("You should type 1 or 2")
+        except ValueError :
+            print("You should type 1 or 2")
+        else :
+            retry_menu_1 = False
 
     while(first_choice_menu == 1) :
 
         print("1) Panthers \n")
         print("2) Bandits \n")
         print("3) Warriors \n")
-        team_choice = int(input("Enter a choice >"))
-        if team_choice == 1:
+
+        # Iterating on the choice of the teams until we get a valid input
+        while (retry_menu_2):
+            try:
+                team_choice = int(input("Enter a choice >"))
+                if team_choice > 3:
+                    raise ValueError("You should type 1, 2 or 3")
+            except ValueError:
+                print("You should type 1, 2 or 3")
+            else:
+                retry_menu_2 = False
+
+
+        if team_choice== 1:
             print("Team: Panthers Stats")
             print("\n--------------------\n")
             print("the number of players is :", num_players)
@@ -83,7 +109,7 @@ if __name__ == "__main__":
             print("\n")
             print("The list of the guardians is :", end="")
             for player_dictionnary in bal_teams["Panthers"]:
-                print(player_dictionnary["guardians"], ",", end="")
+                print(",".join(player_dictionnary["guardians"]), ",", end="")
 
         elif team_choice == 2:
             print("Team: Bandits Stats")
@@ -98,8 +124,8 @@ if __name__ == "__main__":
                 print(player_dictionnary["name"], ",", end="")
             print("\n")
             print("The list of the guardians is :", end="")
-            for player_dictionnary in bal_teams["Panthers"]:
-                print(player_dictionnary["guardians"], ",", end="")
+            for player_dictionnary in bal_teams["Bandits"]:
+                print(",".join(player_dictionnary["guardians"]), ",", end="")
 
         elif team_choice == 3:
             print("Team: Warriors Stats")
@@ -114,7 +140,7 @@ if __name__ == "__main__":
                 print(player_dictionnary["name"], ",", end="")
             print("\n")
             print("The list of the guardians is :",end="")
-            for player_dictionnary in bal_teams["Panthers"]:
+            for player_dictionnary in bal_teams["Warriors"]:
                 print(",".join(player_dictionnary["guardians"]), ",", end="")
         input("\nPress Enter to continue...")
         print("BASKETBALL TEAMS STATS TOOL :\n")
@@ -122,5 +148,5 @@ if __name__ == "__main__":
         print("Here are your choices : \n1) Display Team Stats \n2) Quit \n")
         first_choice_menu = int(input("Enter a choice >"))
 
-    else:
-        print("See you soon !")
+
+    print("See you soon !")
