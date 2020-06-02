@@ -1,5 +1,4 @@
 from constants import PLAYERS, TEAMS
-#todo  add exceptions
 
 def sentence_to_bool(sentence):
     if sentence == "YES":
@@ -44,6 +43,27 @@ def balance_teams(players, teams):
 def average_height(team,balanced_teams) :
     return float(sum([player["height"] for player in balanced_teams[team]])/len([player["height"] for player in balanced_teams[team]]))
 
+def display_team_stat(team):
+    print("Team: {} Stats".format(team))
+    print("\n--------------------\n")
+    print("the number of players is :", num_players)
+    print("the number of experienced players is :", num_exp)
+    print("the number of inexperienced players is :", num_inexp)
+    print("the average height of the team is", average_height(team, bal_teams))
+    print("\n")
+    print("The list of the players is :", end="")
+    for player_dictionnary in bal_teams[team]:
+        print(player_dictionnary["name"], ",", end="")
+    print("\n")
+    print("The list of the guardians is :", end="")
+    for player_dictionnary in bal_teams[team]:
+        print(",".join(player_dictionnary["guardians"]), ",", end="")
+
+
+def display_all_teams() :
+    print("1) Panthers \n")
+    print("2) Bandits \n")
+    print("3) Warriors \n")
 
 # dunder automatically executes when script is run but not imported
 
@@ -56,97 +76,60 @@ if __name__ == "__main__":
     num_exp = int(len([player for player in PLAYERS if player["experience"] == "YES"])/len(TEAMS))
     num_inexp = int(len([player for player in PLAYERS if player["experience"] == "NO"])/len(TEAMS))
 
-    print(bal_teams)
     first_choice_menu = 0
 
     retry_menu_1 = True
     retry_menu_2 = True
 
-    print("BASKETBALL TEAMS STATS TOOL :\n")
-    print("----------MENU--------------:\n")
-    print("Here are your choices : \n1) Display Team Stats \n2) Quit \n")
+
 
 # Iterating on the choice of 1 or 2 until we get a valid input
     while(retry_menu_1) :
+        print("BASKETBALL TEAMS STATS TOOL :\n")
+        print("----------MENU--------------:\n")
+        print("Here are your choices : \n1) Display Team Stats \n2) Quit \n")
         try :
             first_choice_menu = int(input("Enter a choice >"))
             if first_choice_menu > 2 :
                 raise ValueError("You should type 1 or 2")
+
         except ValueError :
             print("You should type 1 or 2")
         else :
             retry_menu_1 = False
 
-    while(first_choice_menu == 1) :
+        while(first_choice_menu == 1) :
 
-        print("1) Panthers \n")
-        print("2) Bandits \n")
-        print("3) Warriors \n")
+            display_all_teams()
 
-        # Iterating on the choice of the teams until we get a valid input
-        while (retry_menu_2):
-            try:
-                team_choice = int(input("Enter a choice >"))
-                if team_choice > 3:
-                    raise ValueError("You should type 1, 2 or 3")
-            except ValueError:
-                print("You should type 1, 2 or 3")
-            else:
-                retry_menu_2 = False
+            # Iterating on the choice of the teams until we get a valid input
+            while (retry_menu_2):
+                try:
+                    team_choice = int(input("Enter a choice >"))
+                    if team_choice > 3:
+                        raise ValueError("You should type 1, 2 or 3")
+                except ValueError:
+                    print("You should type 1, 2 or 3")
+                else:
+                    retry_menu_2 = False
 
 
-        if team_choice== 1:
-            print("Team: Panthers Stats")
-            print("\n--------------------\n")
-            print("the number of players is :", num_players)
-            print("the number of experienced players is :", num_exp)
-            print("the number of inexperienced players is :", num_inexp)
-            print("the average height of the team is", average_height("Panthers", bal_teams))
-            print("\n")
-            print("The list of the players is :",end="")
-            for player_dictionnary in bal_teams["Panthers"]:
-                print(player_dictionnary["name"], ",", end="")
-            print("\n")
-            print("The list of the guardians is :", end="")
-            for player_dictionnary in bal_teams["Panthers"]:
-                print(",".join(player_dictionnary["guardians"]), ",", end="")
+            if team_choice == 1:
+                display_team_stat("Panthers")
 
-        elif team_choice == 2:
-            print("Team: Bandits Stats")
-            print("\n--------------------")
-            print("the number of players is :", num_players)
-            print("the number of experienced players is :", num_exp)
-            print("the number of inexperienced players is :", num_inexp)
-            print("the average height of the team is", average_height("Bandits", bal_teams))
-            print("\n")
-            print("The list of the players is :", end="")
-            for player_dictionnary in bal_teams["Bandits"]:
-                print(player_dictionnary["name"], ",", end="")
-            print("\n")
-            print("The list of the guardians is :", end="")
-            for player_dictionnary in bal_teams["Bandits"]:
-                print(",".join(player_dictionnary["guardians"]), ",", end="")
 
-        elif team_choice == 3:
-            print("Team: Warriors Stats")
-            print("--------------------")
-            print("the number of players is :", num_players)
-            print("the number of experienced players is :", num_exp)
-            print("the number of inexperienced players is :", num_inexp)
-            print("the average height of the team is",average_height("Warriors", bal_teams))
-            print("\n")
-            print("The list of the players is :",end="")
-            for player_dictionnary in bal_teams["Warriors"]:
-                print(player_dictionnary["name"], ",", end="")
-            print("\n")
-            print("The list of the guardians is :",end="")
-            for player_dictionnary in bal_teams["Warriors"]:
-                print(",".join(player_dictionnary["guardians"]), ",", end="")
-        input("\nPress Enter to continue...")
-        print("BASKETBALL TEAMS STATS TOOL :\n")
-        print("----------MENU--------------:\n")
-        print("Here are your choices : \n1) Display Team Stats \n2) Quit \n")
-        first_choice_menu = int(input("Enter a choice >"))
+            elif team_choice == 2:
+                display_team_stat("Bandits")
+
+            elif team_choice == 3:
+                display_team_stat("Warriors")
+
+            input("\nPress Enter to continue...")
+
+            first_choice_menu = 0
+            retry_menu_1 = True
+            retry_menu_2 = True
+
 
 
     print("See you soon !")
